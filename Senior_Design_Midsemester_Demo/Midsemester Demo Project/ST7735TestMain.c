@@ -362,6 +362,8 @@ int main(void)
 
 	/* UI */
 	DrawScreenBase();
+
+	uint8_t testCase = 0;
 	uint32_t outputVal = 0;
 	uint8_t start = 0;
 
@@ -390,13 +392,13 @@ int main(void)
 				DrawScreenBase();
 				break;
 			case 2:
-				bits = (bits) % 12 + 1;
+				bits = (bits) % 6 + 6;
 				DrawScreenBase();
 				break;
 			case 4:
-				degree = (degree) % 4 + 1;
-				DrawScreenBase();
 				break;
+				degree = (degree) % 3 + 1;
+				DrawScreenBase();
 			case 8:
 				if (target < 3.3) {
 					target += 0.1;
@@ -455,8 +457,8 @@ int main(void)
 	}
 	else
 	{
-		//Try quadratic
-		resolution = QUAD_ROOTS[v_high] - QUAD_ROOTS[v_low] / fp_bit_power;
+		//Try quadratic 
+		resolution = quartic_11_bits[(1 << num_bits) - 1] - 0 / fp_bit_power; //Indices should by 2^n - 1 and 0
 		double temp = (target - v_low) / resolution;
 		result = temp * temp;
 
