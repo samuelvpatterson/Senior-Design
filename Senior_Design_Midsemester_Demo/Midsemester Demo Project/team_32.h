@@ -399,6 +399,7 @@ fixedpt_pow(fixedpt n, fixedpt exp)
 
 // Multiplication, addition, subtraction, and division
 // fixed-point arithmetic for 64 bit unsigned values.
+uint64_t convert_double_to_fp(double n);
 uint64_t convert_uint64_t_to_fp(uint64_t n);
 uint64_t convert_fp_to_uint64_t_rz(uint64_t x);
 uint64_t convert_fp_to_uint64_t_rn(uint64_t x);
@@ -411,6 +412,12 @@ uint64_t mult_fp_uint64_t(uint64_t x, uint64_t n);
 uint64_t mult_fp(uint64_t x, uint64_t y);
 uint64_t div_fp(uint64_t x, uint64_t y);
 uint64_t div_fp_uint64_t(uint64_t x, uint64_t n);
+
+uint64_t 
+convert_double_to_fp(double n)
+{
+    return (uint64_t) (n * f);
+}
 
 uint64_t 
 convert_uint64_t_to_fp(uint64_t n)

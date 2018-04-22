@@ -150,7 +150,7 @@ http://users.ece.utexas.edu/~valvano/
 #include "ADCSWTrigger.h"
 #include "SwitchInput.h"
 #include "mappings.h"
-
+#include "team_32.h"
 
 #define PF2             (*((volatile uint32_t *)0x40025010))
 #define PF1             (*((volatile uint32_t *)0x40025008))
@@ -166,7 +166,7 @@ uint16_t positivehigh[]  = {2 ^ 11, 2 ^ 10, 2 ^ 9, 2 ^ 8, 2 ^ 7, 2 ^ 6, 2 ^ 5, 2
 uint16_t linear_neg[2048] =
 
 // Right now I am hardcoding values, ideally they will be read in by buttons
-float dac_max_v, dac_min_v;
+    float dac_max_v, dac_min_v;
 uint32_t num_bits;
 
 typedef uint8_t bool;
@@ -286,6 +286,12 @@ void DrawScreenBase() {
 	printf("%.1f" , printError);
 }
 
+enum Cases {
+	LINEARNEG,
+	LINEARCONST,
+	LINEAR;
+};
+
 uint32_t BS_Find_Dac_Out(uint32_t low, uint32_t high, uint32_t target)
 {
 	uint32_t mid, voltage;
@@ -310,18 +316,18 @@ uint32_t BS_Find_Dac_Out(uint32_t low, uint32_t high, uint32_t target)
 	return -1; //not found
 }
 
-uint16_t getADCOutput(uint16_t dacIn){
-		DAC_Out(dacIn);
-		//DelayWaitms(20);
-		//double newOut = 0;
-		uint16_t outputVal = ADC0_InSeq3();
-		ST7735_SetCursor(0,0);
-		outputVal = ADC0_InSeq3();
-		double ratio = (double)dacIn/(double)outputVal;
-		double newOut = (double)(outputVal) * (ratio);
-		outputVal = (uint16_t)newOut;
-		ST7735_OutUDec(outputVal);
-		return outputVal;	
+uint16_t getADCOutput(uint16_t dacIn) {
+	DAC_Out(dacIn);
+	//DelayWaitms(20);
+	//double newOut = 0;
+	uint16_t outputVal = ADC0_InSeq3();
+	ST7735_SetCursor(0, 0);
+	outputVal = ADC0_InSeq3();
+	double ratio = (double)dacIn / (double)outputVal;
+	double newOut = (double)(outputVal) * (ratio);
+	outputVal = (uint16_t)newOut;
+	ST7735_OutUDec(outputVal);
+	return outputVal;
 }
 
 int main(void)
@@ -350,7 +356,7 @@ int main(void)
 	fixedpt result;
 	int32_t slope;
 	int32_t potTarget;
-	fixedpt resolution = (2.4 - 0) / 2048; //change to use floating point library
+	fixedpt resolution = 0; //change to use floating point library
 	double conversion = 0;
 
 
@@ -422,22 +428,27 @@ int main(void)
 	//modularize
 	//debug
 
+	uint64_t convertDoubleToADCValue(double value, uint32_t bits)
+	{
+
+	}
 
 	//Initialization
-	uint32_t v_high = getADCOutput((1 << num_bits)-1);
-	uint32_t v_low = getADCOutput((1));
-	
-	fixedpt fp_v_high = toFixed(v_high);
-	fixedpt fp_v_low = toFixed(v_low);
-	fixedpt fp_target = toFixed(target);
-	fixedpt fp_error = toFixed(error);
+	fixedpt fp_v_high = convert_double_to_fp(2.47);
+	fixedpt fp_v_low = 0;
+	fixedpt fp_bit_power = convert_double_to_fp((1 << num_bits) - 1);
+
+	fixedpt fp_target = convert_double_to_fp(target);
+	fixedpt fp_error = convert_double_to_fp(error);
 
 	//Try linear
-	resolution = (fp_v_high - fp_v_low) / toFixed(((1 << num_bits) - 1));
+	resolution = (fp_v_high - fp_v_low) / fp_bit_power;
 	result = (fp_target - fp_v_low) / resolution;
 
+	uint16_t ADC_result = (uint16_t) convert_fp_to_uint64_t_rz(result);
+
 	//test it
-	if (ResultIsCorrect(result, fp_target, fp_error))
+	if (ResultIsCorrect(ADC_result, fp_target, fp_error))
 	{
 		//convert to proper format
 		//print result
@@ -445,7 +456,7 @@ int main(void)
 	else
 	{
 		//Try quadratic
-		resolution = QUAD_ROOTS[v_high] - QUAD_ROOTS[v_low] / toFixed((1 << num_bits));
+		resolution = QUAD_ROOTS[v_high] - QUAD_ROOTS[v_low] / fp_bit_power;
 		double temp = (target - v_low) / resolution;
 		result = temp * temp;
 
@@ -475,9 +486,10 @@ int main(void)
 }
 
 bool
-ResultIsCorrect(fixedpt result, fixedpt target, fixedpt error)
+ResultIsCorrect(uint16_t result, fixedpt target, fixedpt error)
 {
-	return abs(target - result) < error;
+	fixedpt newresult = div_fp(convert_uint64_t_to_fp((uint64_t) result), resolution);
+	return abs(target - newresult) < error;
 }
 
 //}
