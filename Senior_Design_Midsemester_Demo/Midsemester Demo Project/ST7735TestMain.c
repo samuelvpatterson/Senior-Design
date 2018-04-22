@@ -430,11 +430,6 @@ int main(void)
 	//modularize
 	//debug
 
-	uint64_t convertDoubleToADCValue(double value, uint32_t bits)
-	{
-
-	}
-
 	//Initialization
 	fixedpt fp_v_high = convert_double_to_fp(2.47);
 	fixedpt fp_v_low = 0;
