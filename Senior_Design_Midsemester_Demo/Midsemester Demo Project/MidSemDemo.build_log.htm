@@ -3,64 +3,173 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-\\psf\Home\Desktop\Senior_Design\Senior_Design_Midsemester_Demo\Midsemester Demo Project\ST7735.uvproj
-Project File Date:  04/02/2018
+C:\Users\Samuel\Desktop\Senior-Design\Senior_Design_Midsemester_Demo\Midsemester Demo Project\ST7735.uvproj
+Project File Date:  04/22/2018
 
 <h2>Output:</h2>
-Rebuild target 'ST7735'
-assembling startup.s...
-compiling PLL.c...
-compiling ST7735.c...
+Build target 'ST7735'
 compiling ST7735TestMain.c...
 TrimmingDisplayDriver.h(19): warning:  #1-D: last line of file ends without a newline
   void Display_Results(uint32_t VoltageTarget, uint32_t VoltageActual);
-ST7735TestMain.c(169): warning:  #520-D: initialization with "{...}" expected for aggregate object
-  float dac_max_v, dac_min_v;
-ST7735TestMain.c(169): error:  #29: expected an expression
-  float dac_max_v, dac_min_v;
-ST7735TestMain.c(310): warning:  #68-D: integer conversion resulted in a change of sign
+linear_case.h(41): warning:  #1-D: last line of file ends without a newline
+  //uint16_t cubic6[] = {1,8,27};
+team_32.h(124): warning:  #63-D: shift count is too large
+        return (((fixedptd)A * (fixedptd)B) >> FIXEDPT_FBITS);
+team_32.h(132): warning:  #63-D: shift count is too large
+        return (((fixedptd)A << FIXEDPT_FBITS) / (fixedptd)B);
+team_32.h(155): warning:  #63-D: shift count is too large
+        const fixedptud one = (fixedptud)1 << FIXEDPT_BITS;
+team_32.h(188): warning:  #63-D: shift count is too large
+                str[slen++] = '0' + (fr >> FIXEDPT_BITS) % 10;
+team_32.h(254): warning:  #63-D: shift count is too large
+                fixedpt_rconst(7.61e-03),
+team_32.h(255): warning:  #63-D: shift count is too large
+                fixedpt_rconst(1.6605e-01)
+team_32.h(258): warning:  #63-D: shift count is too large
+        fp %= 2 * FIXEDPT_PI;
+team_32.h(260): warning:  #63-D: shift count is too large
+                fp = FIXEDPT_PI * 2 + fp;
+team_32.h(261): warning:  #63-D: shift count is too large
+        if ((fp > FIXEDPT_HALF_PI) && (fp <= FIXEDPT_PI)) 
+team_32.h(261): warning:  #63-D: shift count is too large
+        if ((fp > FIXEDPT_HALF_PI) && (fp <= FIXEDPT_PI)) 
+team_32.h(262): warning:  #63-D: shift count is too large
+                fp = FIXEDPT_PI - fp;
+team_32.h(263): warning:  #63-D: shift count is too large
+        else if ((fp > FIXEDPT_PI) && (fp <= (FIXEDPT_PI + FIXEDPT_HALF_PI))) {
+team_32.h(263): warning:  #63-D: shift count is too large
+        else if ((fp > FIXEDPT_PI) && (fp <= (FIXEDPT_PI + FIXEDPT_HALF_PI))) {
+team_32.h(263): warning:  #63-D: shift count is too large
+        else if ((fp > FIXEDPT_PI) && (fp <= (FIXEDPT_PI + FIXEDPT_HALF_PI))) {
+team_32.h(264): warning:  #63-D: shift count is too large
+                fp = fp - FIXEDPT_PI;
+team_32.h(266): warning:  #63-D: shift count is too large
+        } else if (fp > (FIXEDPT_PI + FIXEDPT_HALF_PI)) {
+team_32.h(266): warning:  #63-D: shift count is too large
+        } else if (fp > (FIXEDPT_PI + FIXEDPT_HALF_PI)) {
+team_32.h(267): warning:  #63-D: shift count is too large
+                fp = (FIXEDPT_PI << 1) - fp;
+team_32.h(285): warning:  #63-D: shift count is too large
+        return (fixedpt_sin(FIXEDPT_HALF_PI - A));
+team_32.h(302): warning:  #63-D: shift count is too large
+        const fixedpt LN2 = fixedpt_rconst(0.69314718055994530942);
+team_32.h(303): warning:  #63-D: shift count is too large
+        const fixedpt LN2_INV = fixedpt_rconst(1.4426950408889634074);
+team_32.h(305): warning:  #63-D: shift count is too large
+                fixedpt_rconst(1.66666666666666019037e-01),
+team_32.h(306): warning:  #63-D: shift count is too large
+                fixedpt_rconst(-2.77777777770155933842e-03),
+team_32.h(307): warning:  #63-D: shift count is too large
+                fixedpt_rconst(6.61375632143793436117e-05),
+team_32.h(308): warning:  #63-D: shift count is too large
+                fixedpt_rconst(-1.65339022054652515390e-06),
+team_32.h(309): warning:  #63-D: shift count is too large
+                fixedpt_rconst(4.13813679705723846039e-08),
+team_32.h(342): warning:  #63-D: shift count is too large
+        const fixedpt LN2 = fixedpt_rconst(0.69314718055994530942);
+team_32.h(344): warning:  #63-D: shift count is too large
+                fixedpt_rconst(6.666666666666735130e-01),
+team_32.h(345): warning:  #63-D: shift count is too large
+                fixedpt_rconst(3.999999999940941908e-01),
+team_32.h(346): warning:  #63-D: shift count is too large
+                fixedpt_rconst(2.857142874366239149e-01),
+team_32.h(347): warning:  #63-D: shift count is too large
+                fixedpt_rconst(2.222219843214978396e-01),
+team_32.h(348): warning:  #63-D: shift count is too large
+                fixedpt_rconst(1.818357216161805012e-01),
+team_32.h(349): warning:  #63-D: shift count is too large
+                fixedpt_rconst(1.531383769920937332e-01),
+team_32.h(350): warning:  #63-D: shift count is too large
+                fixedpt_rconst(1.479819860511658591e-01)
+team_32.h(419): warning:  #63-D: shift count is too large
+      return (uint64_t) (n * f);
+team_32.h(425): warning:  #63-D: shift count is too large
+      return n * f;
+team_32.h(432): warning:  #186-D: pointless comparison of unsigned integer with zero
+      return (x < 0) ? ((x - (f / 2)) / f) : ((x + (f / 2)) / f);
+team_32.h(432): warning:  #63-D: shift count is too large
+      return (x < 0) ? ((x - (f / 2)) / f) : ((x + (f / 2)) / f);
+team_32.h(432): warning:  #63-D: shift count is too large
+      return (x < 0) ? ((x - (f / 2)) / f) : ((x + (f / 2)) / f);
+team_32.h(432): warning:  #63-D: shift count is too large
+      return (x < 0) ? ((x - (f / 2)) / f) : ((x + (f / 2)) / f);
+team_32.h(432): warning:  #63-D: shift count is too large
+      return (x < 0) ? ((x - (f / 2)) / f) : ((x + (f / 2)) / f);
+team_32.h(439): warning:  #63-D: shift count is too large
+      return x / f;
+team_32.h(469): warning:  #63-D: shift count is too large
+      return (((uint64_t) x) * y / f);
+team_32.h(481): warning:  #63-D: shift count is too large
+      return (((uint64_t) x) * f / y);
+ST7735TestMain.c(338): warning:  #68-D: integer conversion resulted in a change of sign
         return -1; //not found
-ST7735TestMain.c(350): error:  #20: identifier "fixedpt" is undefined
-        fixedpt result;
-ST7735TestMain.c(353): error:  #20: identifier "fixedpt" is undefined
-        fixedpt resolution = (2.4 - 0) / 2048; //change to use floating point library
-ST7735TestMain.c(430): error:  #20: identifier "fixedpt" is undefined
-        fixedpt fp_v_high = toFixed(v_high);
-ST7735TestMain.c(430): warning:  #223-D: function "toFixed" declared implicitly
-        fixedpt fp_v_high = toFixed(v_high);
-ST7735TestMain.c(431): error:  #20: identifier "fixedpt" is undefined
-        fixedpt fp_v_low = toFixed(v_low);
-ST7735TestMain.c(432): error:  #20: identifier "fixedpt" is undefined
-        fixedpt fp_target = toFixed(target);
-ST7735TestMain.c(433): error:  #20: identifier "fixedpt" is undefined
-        fixedpt fp_error = toFixed(error);
-ST7735TestMain.c(440): error:  #140: too many arguments in function call
-        if (ResultIsCorrect(result, fp_target, fp_error))
-ST7735TestMain.c(448): error:  #20: identifier "QUAD_ROOTS" is undefined
-                resolution = QUAD_ROOTS[v_high] - QUAD_ROOTS[v_low] / toFixed((1 << num_bits));
-ST7735TestMain.c(459): error:  #20: identifier "CUBIC_ROOTS" is undefined
-                        resolution = CUBIC_ROOTS[v_high] - CUBIC_ROOTS[v_low] / (1 << num_bits);
-ST7735TestMain.c(348): warning:  #177-D: variable "y2" was declared but never referenced
+ST7735TestMain.c(422): warning:  #111-D: statement is unreachable
+                                degree = (degree) % 3 + 1;
+ST7735TestMain.c(376): warning:  #177-D: variable "y2" was declared but never referenced
         int32_t y2;
-ST7735TestMain.c(349): warning:  #177-D: variable "y1" was declared but never referenced
+ST7735TestMain.c(377): warning:  #177-D: variable "y1" was declared but never referenced
         int32_t y1;
-ST7735TestMain.c(351): warning:  #177-D: variable "slope" was declared but never referenced
+ST7735TestMain.c(378): warning:  #177-D: variable "result" was declared but never referenced
+        fixedpt result;
+ST7735TestMain.c(379): warning:  #177-D: variable "slope" was declared but never referenced
         int32_t slope;
-ST7735TestMain.c(352): warning:  #177-D: variable "potTarget" was declared but never referenced
+ST7735TestMain.c(380): warning:  #177-D: variable "potTarget" was declared but never referenced
         int32_t potTarget;
-ST7735TestMain.c(354): warning:  #177-D: variable "conversion" was declared but never referenced
+ST7735TestMain.c(381): warning:  #177-D: variable "resolution" was declared but never referenced
+        fixedpt resolution = 0; //change to use floating point library
+ST7735TestMain.c(382): warning:  #177-D: variable "conversion" was declared but never referenced
         double conversion = 0;
-ST7735TestMain.c(359): warning:  #177-D: variable "outputVal" was declared but never referenced
+ST7735TestMain.c(388): warning:  #177-D: variable "testCase" was declared but never referenced
+        uint8_t testCase = 0;
+ST7735TestMain.c(389): warning:  #177-D: variable "outputVal" was declared but never referenced
         uint32_t outputVal = 0;
-ST7735TestMain.c(478): error:  #20: identifier "fixedpt" is undefined
-  ResultIsCorrect(fixedpt result, fixedpt target, fixedpt error)
-ST7735TestMain.c(478): error:  #20: identifier "fixedpt" is undefined
-  ResultIsCorrect(fixedpt result, fixedpt target, fixedpt error)
-ST7735TestMain.c(478): error:  #20: identifier "fixedpt" is undefined
-  ResultIsCorrect(fixedpt result, fixedpt target, fixedpt error)
-ST7735TestMain.c(478): error:  #147-D: declaration is incompatible with "bool ResultIsCorrect(uint32_t)" (declared at line 179)
-  ResultIsCorrect(fixedpt result, fixedpt target, fixedpt error)
-ST7735TestMain.c: 10 warnings, 14 errors
+ST7735TestMain.c: 57 warnings, 0 errors
+linking...
+.\MidSemDemo.axf: error: L6047U: The size of this image (46116 bytes) exceeds the maximum allowed for this version of the linker
+Finished: 0 information, 0 warning, 0 error and 1 fatal error messages.
+".\MidSemDemo.axf" - 1 Error(s), 57 Warning(s).
+Target not created
+near_negative10 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol linear_negative9 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol linear_negative8 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol linear_negative7 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol linear_negative6 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol quadratic11 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol quadratic10 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol quadratic9 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol quadratic8 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol quadratic7 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol quadratic6 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol cubic11 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol cubic10 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol cubic9 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol cubic8 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol cubic7 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol cubic6 multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol add_fp multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol div_fp multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol mult_fp multiply defined (by linear_case.o and st7735testmain.o).
+.\MidSemDemo.axf: Error: L6200E: Symbol sub_fp multiply defined (by linear_case.o and st7735testmain.o).
+Not enough information to list image symbols.
+Not enough information to list the image map.
+Finished: 2 information, 0 warning and 23 error messages.
+".\MidSemDemo.axf" - 23 Error(s), 57 Warning(s).
+Target not created
+identifier "quadratic_6_bits" is undefined
+                  fp_quadratic_resolution = (quadratic_6_bits[63] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
+ST7735TestMain.c(561): error:  #165: too few arguments in function call
+                  fp_quadratic_trim = div_fp((fp_target - fp_v_low) / fp_quadratic_resolution);
+ST7735TestMain.c(564): error:  #20: identifier "quadratic_7_bits" is undefined
+                  fp_quadratic_resolution = (quadratic_7_bits[127] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
+ST7735TestMain.c(565): error:  #165: too few arguments in function call
+                  fp_quadratic_trim = div_fp((fp_target - fp_v_low) / fp_quadratic_resolution);
+ST7735TestMain.c(568): error:  #20: identifier "quadratic_8_bits" is undefined
+                  fp_quadratic_resolution = (quadratic_8_bits[255] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
+ST7735TestMain.c(569): error:  #165: too few arguments in function call
+                  fp_quadratic_trim = div_fp((fp_target - fp_v_low) / fp_quadratic_resolution);
+ST7735TestMain.c(572): error:  #20: identifier "quadratic_9_bits" is undefined
+                  fp_quadratic_resolution = (quadratic_9_bits[511] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
+ST7735TestMain.c: 48 warnings, 30 errors
 compiling fixed.c...
 compiling Lab1.c...
 compiling Buttons_32.c...
@@ -70,7 +179,9 @@ Buttons_32.c: 1 warning, 0 errors
 compiling linear_case.c...
 fixed_point.h(56): warning:  #177-D: variable "ILN2" was declared but never referenced
       const int ILN2 = 94548;        /* 1/ln(2) with 2^16 as base*/
-linear_case.c: 1 warning, 0 errors
+linear_case.h(41): warning:  #1-D: last line of file ends without a newline
+  uint16_t cubic6[] = {1,8,27};
+linear_case.c: 2 warnings, 0 errors
 compiling TrimmingDisplayDriver.c...
 TrimmingDisplayDriver.c(58): warning:  #223-D: function "ST7735_sDecOut2" declared implicitly
         ST7735_sDecOut2(VoltageTarget);
@@ -82,9 +193,32 @@ TrimmingDisplayDriver.c: 3 warnings, 0 errors
 compiling ADCSWTrigger.c...
 compiling DAC.c...
 compiling Switch.c...
-".\MidSemDemo.axf" - 14 Error(s), 15 Warning(s).
-Target not created
-of "inc/hw_ints.h")
+compiling DAC_drivernew.c...
+../inc/tm4c123gh6pm.h(48): warning:  #47-D: incompatible redefinition of macro "INT_GPIOA" (declared at line 370 of "inc/hw_ints.h")
+  #define INT_GPIOA               16          // GPIO Port A
+../inc/tm4c123gh6pm.h(49): warning:  #47-D: incompatible redefinition of macro "INT_GPIOB" (declared at line 371 of "inc/hw_ints.h")
+  #define INT_GPIOB               17          // GPIO Port B
+../inc/tm4c123gh6pm.h(50): warning:  #47-D: incompatible redefinition of macro "INT_GPIOC" (declared at line 372 of "inc/hw_ints.h")
+  #define INT_GPIOC               18          // GPIO Port C
+../inc/tm4c123gh6pm.h(51): warning:  #47-D: incompatible redefinition of macro "INT_GPIOD" (declared at line 373 of "inc/hw_ints.h")
+  #define INT_GPIOD               19          // GPIO Port D
+../inc/tm4c123gh6pm.h(52): warning:  #47-D: incompatible redefinition of macro "INT_GPIOE" (declared at line 374 of "inc/hw_ints.h")
+  #define INT_GPIOE               20          // GPIO Port E
+../inc/tm4c123gh6pm.h(53): warning:  #47-D: incompatible redefinition of macro "INT_UART0" (declared at line 451 of "inc/hw_ints.h")
+  #define INT_UART0               21          // UART0
+../inc/tm4c123gh6pm.h(54): warning:  #47-D: incompatible redefinition of macro "INT_UART1" (declared at line 452 of "inc/hw_ints.h")
+  #define INT_UART1               22          // UART1
+../inc/tm4c123gh6pm.h(55): warning:  #47-D: incompatible redefinition of macro "INT_SSI0" (declared at line 428 of "inc/hw_ints.h")
+  #define INT_SSI0                23          // SSI0
+../inc/tm4c123gh6pm.h(56): warning:  #47-D: incompatible redefinition of macro "INT_I2C0" (declared at line 403 of "inc/hw_ints.h")
+  #define INT_I2C0                24          // I2C0
+../inc/tm4c123gh6pm.h(57): warning:  #47-D: incompatible redefinition of macro "INT_PWM0_FAULT" (declared at line 419 of "inc/hw_ints.h")
+  #define INT_PWM0_FAULT          25          // PWM0 Fault
+../inc/tm4c123gh6pm.h(58): warning:  #47-D: incompatible redefinition of macro "INT_PWM0_0" (declared at line 415 of "inc/hw_ints.h")
+  #define INT_PWM0_0              26          // PWM0 Generator 0
+../inc/tm4c123gh6pm.h(59): warning:  #47-D: incompatible redefinition of macro "INT_PWM0_1" (declared at line 416 of "inc/hw_ints.h")
+  #define INT_PWM0_1              27          // PWM0 Generator 1
+../inc/tm4c123gh6pm.h(60): warning:  #47-D: incompatible redefinition of macro "INT_PWM0_2" (declared at line 417 of "inc/hw_ints.h")
   #define INT_PWM0_2              28          // PWM0 Generator 2
 ../inc/tm4c123gh6pm.h(61): warning:  #47-D: incompatible redefinition of macro "INT_QEI0" (declared at line 425 of "inc/hw_ints.h")
   #define INT_QEI0                29          // QEI0
@@ -224,23 +358,5 @@ DAC_drivernew.c(19): warning:  #223-D: function "SysCtlClockGet" declared implic
         SSIConfigSetExpClk(SSI1_BASE, SysCtlClockGet(), 0x00000000, 0x00000000, 2000000, 8); // Configure the SSI.
 DAC_drivernew.c: 81 warnings, 0 errors
 compiling ssi.c...
-compiling sysctl.c...
-'\\psf\Home\Desktop\Senior_Design\Senior_Design_Midsemester_Demo\Midsemester Demo Project'
-CMD.EXE was started with the above path as the current directory.
-UNC paths are not supported.  Defaulting to Windows directory.
-'\\psf\Home\Desktop\Senior_Design\Senior_Design_Midsemester_Demo\Midsemester Demo Project'
-CMD.EXE was started with the above path as the current directory.
-UNC paths are not supported.  Defaulting to Windows directory.
-sysctl.c: error: L6002U: Could not open file .\sysctl.o: No such file or directory
-Finished: 0 information, 0 warning, 0 error and 1 fatal error messages.
-".\MidSemDemo.axf" - 1 Error(s), 92 Warning(s).
-Target not created
-st image symbols.
-Finished: 1 information, 0 warning and 7 error messages.
-".\MidSemDemo.axf" - 7 Error(s), 92 Warning(s).
-Target not created
-18E: Undefined symbol IntUnregister (referred from ssi.o).
-Not enough information to list image symbols.
-Finished: 1 information, 0 warning and 7 error messages.
-".\MidSemDemo.axf" - 7 Error(s), 92 Warning(s).
+".\MidSemDemo.axf" - 30 Error(s), 135 Warning(s).
 Target not created

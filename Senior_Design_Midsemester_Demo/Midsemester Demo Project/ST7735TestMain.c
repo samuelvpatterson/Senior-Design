@@ -163,10 +163,10 @@ uint16_t positivelow[]  = {2 ^ 4, 2 ^ 5, 2 ^ 6, 2 ^ 7, 2 ^ 8, 2 ^ 9, 2 ^ 10, 2 ^
 uint16_t positivemid[]  = {2 ^ 5, 2 ^ 5, 2 ^ 5, 2 ^ 5, 2 ^ 5, 2 ^ 5, 2 ^ 5, 2 ^ 5};
 uint16_t positivehigh[]  = {2 ^ 11, 2 ^ 10, 2 ^ 9, 2 ^ 8, 2 ^ 7, 2 ^ 6, 2 ^ 5, 2 ^ 4};
 
-uint16_t linear_neg[2048] =
+//uint16_t linear_neg[2048] =
 
 // Right now I am hardcoding values, ideally they will be read in by buttons
-    float dac_max_v, dac_min_v;
+float dac_max_v, dac_min_v;
 uint32_t num_bits;
 
 typedef uint8_t bool;
@@ -191,7 +191,11 @@ typedef uint8_t bool;
 //float error; //currently unused since only testing linear case
 void DisableInterrupts(void);
 void EnableInterrupts(void);
-bool ResultIsCorrect(uint32_t result);
+bool ResultIsCorrect(fixedpt result, 
+                     fixedpt result_res,
+                     fixedpt target, 
+                     fixedpt target_res,
+                     fixedpt error);
 
 volatile uint32_t ADCvalue;
 
@@ -306,8 +310,8 @@ void DrawSuccessfulResults(char *degree, fixedpt fp_trim) {
 
 	ST7735_FillScreen(0);
 	ST7735_SetCursor(0, 0);
-	ST7735_OutString("Successful %s Trim (Binary): ", degree);
-    ST7735_OutString(""BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(trim));
+	printf("Successful %s Trim (Binary): ", degree);
+  printf(""BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(trim));
 }
 
 uint32_t BS_Find_Dac_Out(uint32_t low, uint32_t high, uint32_t target)
@@ -470,36 +474,36 @@ int main(void)
     {
         case 1:
             // Regular Linear
-            fp_resolution = (fp_v_high - 0) / fp_bit_power; 
-            fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+            fp_resolution = div_fp((fp_v_high - 0), fp_bit_power); 
+            fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
             break;
         case 2:
             // Quadratic
             switch (bits)
             {
                 case 6:
-		            fp_resolution = (quadratic_6_bits[63] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((sqrt_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 7:
-		            fp_resolution = (quadratic_7_bits[127] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((sqrt_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 8:
-		            fp_resolution = (quadratic_8_bits[255] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((sqrt_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 9:
-		            fp_resolution = (quadratic_9_bits[511] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((sqrt_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 10:
-		            fp_resolution = (quadratic_10_bits[1023] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((sqrt_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 11:
-		            fp_resolution = (quadratic_11_bits[2047] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((sqrt_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
             }
 
@@ -509,28 +513,28 @@ int main(void)
             switch (bits)
             {
                 case 6:
-		            fp_resolution = (cubic_6_bits[63] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((cubic_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 7:
-		            fp_resolution = (cubic_7_bits[127] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((cubic_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 8:
-		            fp_resolution = (cubic_8_bits[255] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((cubic_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 9:
-		            fp_resolution = (cubic_9_bits[511] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((cubic_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 10:
-		            fp_resolution = (cubic_10_bits[1023] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((cubic_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 11:
-		            fp_resolution = (cubic_11_bits[2047] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low) / fp_resolution);
+										fp_resolution = div_fp((cubic_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
             }
 
@@ -540,10 +544,10 @@ int main(void)
     }
 
     // Linear 
-    fixedpt fp_linear_resolution = (fp_v_high - 0) / fp_bit_power; 
-    fixedpt fp_linear_trim = div_fp((fp_target - fp_v_low) / fp_linear_resolution);
+    fixedpt fp_linear_resolution = div_fp((fp_v_high - 0), fp_bit_power); 
+    fixedpt fp_linear_trim = div_fp((fp_target - fp_v_low), fp_linear_resolution);
 
-	if (ResultIsCorrect(fp_linear_trim, fp_user_trim, fp_error))
+	if (ResultIsCorrect(fp_linear_trim, fp_linear_resolution, fp_user_trim, fp_resolution, fp_error))
 	{
 		// print result
         DrawSuccessfulResults("Linear", fp_user_trim);
@@ -557,32 +561,32 @@ int main(void)
         switch (bits)
         {
             case 6:
-                fp_quadratic_resolution = (quadratic_6_bits[63] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low) / fp_quadratic_resolution);
+                fp_quadratic_resolution = div_fp((sqrt_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
             case 7:
-                fp_quadratic_resolution = (quadratic_7_bits[127] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low) / fp_quadratic_resolution);
+                fp_quadratic_resolution = div_fp((sqrt_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
             case 8:
-                fp_quadratic_resolution = (quadratic_8_bits[255] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low) / fp_quadratic_resolution);
+                fp_quadratic_resolution = div_fp((sqrt_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
             case 9:
-                fp_quadratic_resolution = (quadratic_9_bits[511] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low) / fp_quadratic_resolution);
+                fp_quadratic_resolution = div_fp((sqrt_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
             case 10:
-                fp_quadratic_resolution = (quadratic_10_bits[1023] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low) / fp_quadratic_resolution);
+                fp_quadratic_resolution = div_fp((sqrt_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
             case 11:
-                fp_quadratic_resolution = (quadratic_11_bits[2047] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low) / fp_quadratic_resolution);
+                fp_quadratic_resolution = div_fp((sqrt_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
         
         }
-		if (ResultIsCorrect(fp_quadratic_trim, fp_user_trim, fp_error))
+		if (ResultIsCorrect(fp_quadratic_trim, fp_quadratic_resolution, fp_user_trim, fp_resolution, fp_error))
 		{
 			//print result
             DrawSuccessfulResults("Quadratic", fp_user_trim);
@@ -595,33 +599,33 @@ int main(void)
             switch (bits)
             {
                 case 6:
-		            fp_cubic_resolution = (cubic_6_bits[63] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low) / fp_cubic_resolution);
+										fp_cubic_resolution = div_fp((cubic_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
                     break;
                 case 7:
-		            fp_cubic_resolution = (cubic_7_bits[127] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low) / fp_cubic_resolution);
+										fp_cubic_resolution = div_fp((cubic_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
                     break;
                 case 8:
-		            fp_cubic_resolution = (cubic_8_bits[255] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low) / fp_cubic_resolution);
+										fp_cubic_resolution = div_fp((cubic_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
                     break;
                 case 9:
-		            fp_cubic_resolution = (cubic_9_bits[511] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low) / fp_cubic_resolution);
+										fp_cubic_resolution = div_fp((cubic_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
                     break;
                 case 10:
-		            fp_cubic_resolution = (cubic_10_bits[1023] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low) / fp_cubic_resolution);
+										fp_cubic_resolution = div_fp((cubic_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
                     break;
                 case 11:
-		            fp_cubic_resolution = (cubic_11_bits[2047] - 0) / fp_bit_power; //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low) / fp_cubic_resolution);
+										fp_cubic_resolution = div_fp((cubic_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
                     break;
             }
 
 			// Try cubic
-			if (ResultIsCorrect(fp_cubic_trim, fp_user_trim, fp_error))
+			if (ResultIsCorrect(fp_cubic_trim, fp_cubic_resolution, fp_user_trim, fp_resolution, fp_error))
 			{
 				//print result
                 DrawSuccessfulResults("Cubic", fp_user_trim);

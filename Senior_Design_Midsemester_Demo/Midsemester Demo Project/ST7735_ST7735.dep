@@ -1,61 +1,47 @@
 Dependencies for Project 'ST7735', Target 'ST7735': (DO NOT MODIFY !)
-F (.\startup.s)(0x5A67D17A)(--cpu Cortex-M4 --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
-F (.\PLL.c)(0x5A67D17A)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\pll.o --omf_browse .\pll.crf --depend .\pll.d)
+F (.\startup.s)(0x5ADCEF75)(--cpu Cortex-M4 --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\PLL.c)(0x5ADCEF74)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\pll.o --omf_browse .\pll.crf --depend .\pll.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (PLL.h)(0x5A67D17A)
-I (../inc/tm4c123gh6pm.h)(0x5A67D162)
-F (.\ST7735.c)(0x5A67D17A)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\st7735.o --omf_browse .\st7735.crf --depend .\st7735.d)
+I (PLL.h)(0x5ADCEF74)
+I (../inc/tm4c123gh6pm.h)(0x5ADCEF75)
+F (.\ST7735.c)(0x5ADCEF74)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\st7735.o --omf_browse .\st7735.crf --depend .\st7735.d)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (ST7735.h)(0x5A9FE4B5)
-I (../inc/tm4c123gh6pm.h)(0x5A67D162)
-F (.\ST7735TestMain.c)(0x5AD760C7)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\st7735testmain.o --omf_browse .\st7735testmain.crf --depend .\st7735testmain.d)
+I (ST7735.h)(0x5ADCEF74)
+I (../inc/tm4c123gh6pm.h)(0x5ADCEF75)
+F (.\ST7735TestMain.c)(0x5ADE40F7)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\st7735testmain.o --omf_browse .\st7735testmain.crf --depend .\st7735testmain.d)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
 I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C88A34)
-I (TrimmingDisplayDriver.h)(0x5A9F4A5A)
-I (ST7735.h)(0x5A9FE4B5)
-I (linear_case.h)(0x5A9F44EC)
-I (Buttons_32.h)(0x5AA017E5)
-I (PLL.h)(0x5A67D17A)
-I (../inc/tm4c123gh6pm.h)(0x5A67D162)
-I (DAC.h)(0x5ACE45AD)
-I (ADCSWTrigger.h)(0x5AB2808C)
-I (SwitchInput.h)(0x5A7BADBA)
-I (mappings.h)(0x5AD6EC73)
-F (.\fixed.c)(0x5A6FA88E)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\fixed.o --omf_browse .\fixed.crf --depend .\fixed.d)
-I (fixed.h)(0x5A696D04)
+I (TrimmingDisplayDriver.h)(0x5ADCEF74)
+I (ST7735.h)(0x5ADCEF74)
+I (linear_case.h)(0x5ADE4183)
+I (Buttons_32.h)(0x5ADCEF74)
+I (PLL.h)(0x5ADCEF74)
+I (../inc/tm4c123gh6pm.h)(0x5ADCEF75)
+I (DAC.h)(0x5ADCEF74)
+I (ADCSWTrigger.h)(0x5ADCEF74)
+I (SwitchInput.h)(0x5ADCEF74)
+I (mappings.h)(0x5ADCEF75)
+I (team_32.h)(0x5ADE42CC)
+I (C:\Keil\ARM\ARMCC\include\inttypes.h)(0x51C88A34)
+F (.\fixed.c)(0x5ADE41F9)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\fixed.o --omf_browse .\fixed.crf --depend .\fixed.d)
+F (.\Lab1.c)(0x5ADE41F9)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\lab1.o --omf_browse .\lab1.crf --depend .\lab1.d)
+F (.\Buttons_32.c)(0x5ADE422F)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\buttons_32.o --omf_browse .\buttons_32.crf --depend .\buttons_32.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (ST7735.h)(0x5A9FE4B5)
+I (tm4c123gh6pm.h)(0x5ADCEF75)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
-I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x51C88A34)
-F (.\Lab1.c)(0x5AA009B2)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\lab1.o --omf_browse .\lab1.crf --depend .\lab1.d)
-I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
+I (Buttons_32.h)(0x5ADCEF74)
+F (.\linear_case.c)(0x5ADE401D)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\linear_case.o --omf_browse .\linear_case.crf --depend .\linear_case.d)
+F (.\TrimmingDisplayDriver.c)(0x5ADE426E)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\trimmingdisplaydriver.o --omf_browse .\trimmingdisplaydriver.crf --depend .\trimmingdisplaydriver.d)
+F (.\ADCSWTrigger.c)(0x5ADCEF74)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adcswtrigger.o --omf_browse .\adcswtrigger.crf --depend .\adcswtrigger.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (C:\Keil\ARM\ARMCC\include\string.h)(0x51C88A34)
-I (ST7735.h)(0x5A9FE4B5)
-I (PLL.h)(0x5A67D17A)
-I (fixed.h)(0x5A696D04)
-I (../inc/tm4c123gh6pm.h)(0x5A67D162)
-F (.\Buttons_32.c)(0x5AA01144)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\buttons_32.o --omf_browse .\buttons_32.crf --depend .\buttons_32.d)
+I (../inc/tm4c123gh6pm.h)(0x5ADCEF75)
+F (.\DAC.c)(0x5ADCEF74)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\dac.o --omf_browse .\dac.crf --depend .\dac.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (tm4c123gh6pm.h)(0x5388D0EA)
-I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
-I (Buttons_32.h)(0x5AA017E5)
-F (.\linear_case.c)(0x5A9F44F4)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\linear_case.o --omf_browse .\linear_case.crf --depend .\linear_case.d)
-I (fixed_point.h)(0x5AA01297)
+I (tm4c123gh6pm.h)(0x5ADCEF75)
+F (.\Switch.c)(0x5ADCEF74)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\switch.o --omf_browse .\switch.crf --depend .\switch.d)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (linear_case.h)(0x5A9F44EC)
-F (.\TrimmingDisplayDriver.c)(0x5AA001E8)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\trimmingdisplaydriver.o --omf_browse .\trimmingdisplaydriver.crf --depend .\trimmingdisplaydriver.d)
-I (ST7735.h)(0x5A9FE4B5)
-I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x51C88A34)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-F (.\ADCSWTrigger.c)(0x5AB285FE)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adcswtrigger.o --omf_browse .\adcswtrigger.crf --depend .\adcswtrigger.d)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (../inc/tm4c123gh6pm.h)(0x5A67D162)
-F (.\DAC.c)(0x5ACB98E9)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\dac.o --omf_browse .\dac.crf --depend .\dac.d)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (tm4c123gh6pm.h)(0x5388D0EA)
-F (.\Switch.c)(0x5AC27481)(-c --cpu Cortex-M4 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\.. --C99-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\switch.o --omf_browse .\switch.crf --depend .\switch.d)
-I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C88A34)
-I (../inc/tm4c123gh6pm.h)(0x5A67D162)
+I (../inc/tm4c123gh6pm.h)(0x5ADCEF75)
+F (.\team_32.h)(0x5ADE42CC)()
+F (.\linear_case.h)(0x5ADE4183)()
