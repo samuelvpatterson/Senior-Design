@@ -173,6 +173,21 @@ typedef uint8_t bool;
 #define true 1
 #define false 0
 
+// Print binary value
+#define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c%c%c%c"
+#define BYTE_TO_BINARY(byte)  \
+  (byte & 0x400 ? '1' : '0'), \
+  (byte & 0x200 ? '1' : '0'), \
+  (byte & 0x100 ? '1' : '0'), \
+  (byte & 0x80 ? '1' : '0'), \
+  (byte & 0x40 ? '1' : '0'), \
+  (byte & 0x20 ? '1' : '0'), \
+  (byte & 0x10 ? '1' : '0'), \
+  (byte & 0x08 ? '1' : '0'), \
+  (byte & 0x04 ? '1' : '0'), \
+  (byte & 0x02 ? '1' : '0'), \
+  (byte & 0x01 ? '1' : '0') 
+
 //float error; //currently unused since only testing linear case
 void DisableInterrupts(void);
 void EnableInterrupts(void);
@@ -286,11 +301,14 @@ void DrawScreenBase() {
 	printf("%.1f" , printError);
 }
 
-enum Cases {
-	LINEARNEG,
-	LINEARCONST,
-	LINEAR;
-};
+void DrawSuccessfulResults(char *degree, fixedpt fp_trim) {
+    uint16_t trim = (uint16_t) convert_uint64_t_to_fp(fp_trim); 
+
+	ST7735_FillScreen(0);
+	ST7735_SetCursor(0, 0);
+	ST7735_OutString("Successful %s Trim (Binary): ", degree);
+    ST7735_OutString(""BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(trim));
+}
 
 uint32_t BS_Find_Dac_Out(uint32_t low, uint32_t high, uint32_t target)
 {
@@ -527,8 +545,8 @@ int main(void)
 
 	if (ResultIsCorrect(fp_linear_trim, fp_user_trim, fp_error))
 	{
-		//convert to proper format
-		//print result
+		// print result
+        DrawSuccessfulResults("Linear", fp_user_trim);
 	}
 	else
 	{
@@ -567,6 +585,7 @@ int main(void)
 		if (ResultIsCorrect(fp_quadratic_trim, fp_user_trim, fp_error))
 		{
 			//print result
+            DrawSuccessfulResults("Quadratic", fp_user_trim);
 		}
 		else
 		{
@@ -605,11 +624,13 @@ int main(void)
 			if (ResultIsCorrect(fp_cubic_trim, fp_user_trim, fp_error))
 			{
 				//print result
+                DrawSuccessfulResults("Cubic", fp_user_trim);
 			}
 			else
 			{
 				ST7735_FillScreen(0);
-				ST7735_OutString("No Solution Found");
+	            ST7735_SetCursor(0, 0);
+				ST7735_OutString("No Solution Found!");
 			}
 		}
 	}
