@@ -291,18 +291,18 @@ void DrawScreenBase() {
 	ST7735_FillScreen(0);
 	ST7735_SetCursor(0, 0);
 	ST7735_OutString("Number of bits: ");
-	ST7735_OutUDec(bits);
-	ST7735_SetCursor(0, 2);
-	ST7735_OutString("Current Mode: Trim");
-	ST7735_SetCursor(0, 4);
-	ST7735_OutString("Degree: ");
-	ST7735_OutUDec(degree);
-	ST7735_SetCursor(0, 6);
-	ST7735_OutString("Trim Value: ");
-	printf("%.1f" , target);
-	ST7735_SetCursor(0, 8);
-	ST7735_OutString("Error Range: +/- ");
-	printf("%.1f" , printError);
+//	ST7735_OutUDec(bits);
+//	ST7735_SetCursor(0, 2);
+//	ST7735_OutString("Current Mode: Trim");
+//	ST7735_SetCursor(0, 4);
+//	ST7735_OutString("Degree: ");
+//	ST7735_OutUDec(degree);
+//	ST7735_SetCursor(0, 6);
+//	ST7735_OutString("Trim Value: ");
+//	printf("%.1f" , target);
+//	ST7735_SetCursor(0, 8);
+//	ST7735_OutString("Error Range: +/- ");
+//	printf("%.1f" , printError);
 }
 
 void DrawSuccessfulResults(char *degree, fixedpt fp_trim) {
@@ -358,21 +358,21 @@ int main(void)
 	PLL_Init(Bus20MHz);                  // set system clock to 80 MHz
 	ST7735_InitR(INITR_REDTAB); 				 // initialize LCD
 	//EdgeCounter_Init();		// initialize buttons
-	Board_Init();
-	DAC_Init(0); 												 // TODO whoever has DAC code
-	ADC0_InitSWTriggerSeq3_Ch9();													 // TODO not sure if necessary
-	SYSCTL_RCGCGPIO_R |= 0x20;            // activate port F
-	while ((SYSCTL_PRGPIO_R & 0x20) == 0) {}; // ready?
-	// allow time to finish activating
-	Timer0A_Init100HzInt();               // set up Timer0A for 100 Hz interrupts
-	Timer1_Init();
-	GPIO_PORTF_DIR_R |= 0x06;             // make PF2, PF1 out (built-in LED)
-	GPIO_PORTF_AFSEL_R &= ~0x06;          // disable alt funct on PF2, PF1
-	GPIO_PORTF_DEN_R |= 0x06;             // enable digital I/O on PF2, PF1
-	// configure PF2 as GPIO			  // any other inits I forgot about
+//	Board_Init();
+//	DAC_Init(0); 												 // TODO whoever has DAC code
+//	ADC0_InitSWTriggerSeq3_Ch9();													 // TODO not sure if necessary
+//	SYSCTL_RCGCGPIO_R |= 0x20;            // activate port F
+//	while ((SYSCTL_PRGPIO_R & 0x20) == 0) {}; // ready?
+//	// allow time to finish activating
+//	Timer0A_Init100HzInt();               // set up Timer0A for 100 Hz interrupts
+//	Timer1_Init();
+//	GPIO_PORTF_DIR_R |= 0x06;             // make PF2, PF1 out (built-in LED)
+//	GPIO_PORTF_AFSEL_R &= ~0x06;          // disable alt funct on PF2, PF1
+//	GPIO_PORTF_DEN_R |= 0x06;             // enable digital I/O on PF2, PF1
+//	// configure PF2 as GPIO			  // any other inits I forgot about
 	EnableInterrupts();
 
-	SwitchInit();
+	//SwitchInit();
 	int32_t y2;
 	int32_t y1;
 	fixedpt result;
@@ -381,9 +381,12 @@ int main(void)
 	fixedpt resolution = 0; //change to use floating point library
 	double conversion = 0;
 
-
+	
+	//printf("Hello");
 	/* UI */
 	DrawScreenBase();
+	
+	while(1);
 
 	uint8_t testCase = 0;
 	uint32_t outputVal = 0;
@@ -482,27 +485,27 @@ int main(void)
             switch (bits)
             {
                 case 6:
-										fp_resolution = div_fp((sqrt_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((sqrt_10_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 7:
-										fp_resolution = div_fp((sqrt_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((sqrt_10_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 8:
-										fp_resolution = div_fp((sqrt_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((sqrt_10_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 9:
-										fp_resolution = div_fp((sqrt_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((sqrt_10_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 10:
-										fp_resolution = div_fp((sqrt_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((sqrt_10_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 11:
-										fp_resolution = div_fp((sqrt_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((sqrt_10_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
             }
@@ -513,27 +516,27 @@ int main(void)
             switch (bits)
             {
                 case 6:
-										fp_resolution = div_fp((cubic_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((cubic_10_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 7:
-										fp_resolution = div_fp((cubic_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((cubic_10_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 8:
-										fp_resolution = div_fp((cubic_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((cubic_10_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 9:
-										fp_resolution = div_fp((cubic_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((cubic_10_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 10:
-										fp_resolution = div_fp((cubic_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((cubic_10_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
                 case 11:
-										fp_resolution = div_fp((cubic_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+										fp_resolution = div_fp((cubic_10_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                     fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
                     break;
             }
@@ -561,27 +564,27 @@ int main(void)
         switch (bits)
         {
             case 6:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_resolution = div_fp((sqrt_10_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                 fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
             case 7:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_resolution = div_fp((sqrt_10_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                 fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
             case 8:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_resolution = div_fp((sqrt_10_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                 fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
             case 9:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_resolution = div_fp((sqrt_10_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                 fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
             case 10:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_resolution = div_fp((sqrt_10_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                 fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
             case 11:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+                fp_quadratic_resolution = div_fp((sqrt_10_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
                 fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
                 break;
         
@@ -650,8 +653,16 @@ ResultIsCorrect(fixedpt result,
 {
     fixedpt result_voltage = fixedpt_mul(result, result_res);
     fixedpt target_voltage = fixedpt_mul(target, target_res);
-
-    return (abs(result_voltage - target_voltage) <= error);
+	
+		switch(degree)
+		{
+			case(1):
+				    return (abs(result_voltage - target_voltage) <= error);
+			case(2):
+				    return (abs(quadratic11[result_voltage] - target_voltage) <= error);
+			case(3):
+				    return (abs(cubic11[result_voltage] - target_voltage) <= error);
+		}
 }
 
 
