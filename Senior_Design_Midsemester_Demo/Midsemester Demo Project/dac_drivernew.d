@@ -1,12 +1,1 @@
 .\dac_drivernew.o: DAC_drivernew.c
-.\dac_drivernew.o: C:\Keil\ARM\ARMCC\bin\..\include\stdbool.h
-.\dac_drivernew.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
-.\dac_drivernew.o: inc/hw_ints.h
-.\dac_drivernew.o: inc/hw_memmap.h
-.\dac_drivernew.o: inc/hw_ssi.h
-.\dac_drivernew.o: inc/hw_sysctl.h
-.\dac_drivernew.o: inc/hw_types.h
-.\dac_drivernew.o: debug.h
-.\dac_drivernew.o: interrupt.h
-.\dac_drivernew.o: ssi.h
-.\dac_drivernew.o: ../inc/tm4c123gh6pm.h

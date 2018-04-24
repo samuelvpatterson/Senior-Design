@@ -466,19 +466,14 @@
               <FilePath>.\Switch.c</FilePath>
             </File>
             <File>
-              <FileName>DAC_drivernew.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\DAC_drivernew.c</FilePath>
-            </File>
-            <File>
-              <FileName>DAC_drivernew.h</FileName>
+              <FileName>team_32.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\DAC_drivernew.h</FilePath>
+              <FilePath>.\team_32.h</FilePath>
             </File>
             <File>
-              <FileName>ssi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\driverlib\ssi.c</FilePath>
+              <FileName>linear_case.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\linear_case.h</FilePath>
             </File>
           </Files>
         </Group>

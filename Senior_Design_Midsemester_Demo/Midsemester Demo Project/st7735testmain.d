@@ -13,3 +13,5 @@
 .\st7735testmain.o: ADCSWTrigger.h
 .\st7735testmain.o: SwitchInput.h
 .\st7735testmain.o: mappings.h
+.\st7735testmain.o: team_32.h
+.\st7735testmain.o: C:\Keil\ARM\ARMCC\bin\..\include\inttypes.h
