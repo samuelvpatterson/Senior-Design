@@ -14,7 +14,7 @@ void EndCritical(long sr);    // restore I bit to previous value
 
 int heartbeat = 0;
 
-void PortB_Init(void)
+void PortD_Init(void)
 {
 	SYSCTL_RCGCGPIO_R |= 0x08;        // 1) activate clock for Port F
 	while((SYSCTL_PRGPIO_R&0x08)==0){}; // allow time for clock to start
@@ -39,14 +39,9 @@ void SysTick_Init(uint32_t period){long sr;
 
 void SysTick_Handler(void)
 {
-	if((GPIO_PORTD_DATA_R&0xFF)!=0)
-	{
-		port_data = (GPIO_PORTD_DATA_R&0xFF);
-	}
-	else
-	{
-		port_data = 0;
-	}
+
+	port_data = (GPIO_PORTD_DATA_R&0xFF);
+	
 	heartbeat++;
 	if(heartbeat==150)
 	{
@@ -57,7 +52,7 @@ void SysTick_Handler(void)
 
 void SwitchInit()
 {
-	PortB_Init();
+	PortD_Init();
 	SysTick_Init(80000);
 	port_data = 0;
 }
