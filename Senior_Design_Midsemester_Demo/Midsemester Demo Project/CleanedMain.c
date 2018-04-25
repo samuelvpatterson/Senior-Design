@@ -283,7 +283,12 @@ int degree = 1;
 double target = 1.0;
 double printError = 0.1;
 
-uint16_t TestADCIn(fixedpt value);
+uint16_t TestADCIn(fixedpt value)
+{
+	uint16_t out = (uint16_t) convert_fp_to_uint64_t_rz(value);
+	DAC_Out(out);
+	return ADC0_InSeq3();
+}
 
 void DrawScreenBase() {
 	ST7735_FillScreen(0);
@@ -516,6 +521,7 @@ int main2(void)
 			}
 		}
 	}
+	return 0;
 }
 
 // Modified version of ResultIsCorrect that properly uses Robert's arrays as well as DAC and ADC
@@ -538,7 +544,7 @@ ResultIsCorrect(fixedpt test_value)
 
 	//* Using the found linear value, pass it out and see if the input matches what we expect in a linear case. If it doesn't,
 	//* the input isn't linear.
-		adc_res = testADCIn(integer_form << (1 - bits));
+		adc_res = TestADCIn(integer_form << (1 - bits));
 
 	//* Shift it back to get it original form
 		shifted_res = adc_res >> (1 - bits);
@@ -553,7 +559,7 @@ ResultIsCorrect(fixedpt test_value)
 		// In this case, the input is the sqrt of the what the linear value would be. We will use Robert's table to find its quadratic equivalent.
 		quad_equiv = quadratic11[integer_form];
 
-		adc_res = testADCIn(quad_equiv << (1 - bits));
+		adc_res = TestADCIn(quad_equiv << (1 - bits));
 
 		//* Shift it back to get it original form
 		shifted_res = adc_res >> (1 - bits);
@@ -573,7 +579,7 @@ ResultIsCorrect(fixedpt test_value)
 		// In this case, the input is the sqrt of the what the linear value would be. We will use Robert's table to find its quadratic equivalent.
 		cubic_equiv = cubic11[integer_form];
 
-		adc_res = testADCIn(quad_equiv << (1 - bits));
+		adc_res = TestADCIn(quad_equiv << (1 - bits));
 
 		//* Shift it back to get it original form
 		shifted_res = adc_res >> (1 - bits);
@@ -587,6 +593,8 @@ ResultIsCorrect(fixedpt test_value)
 		fp_shifted_res = convert_uint64_t_to_fp((uint64_t) shifted_res); //cubic_conversion);
 
 		return (abs(sub_fp(fp_shifted_res, linear_trim)) <= trim_error);
+	default:
+		return false;
 	}
 }
 
