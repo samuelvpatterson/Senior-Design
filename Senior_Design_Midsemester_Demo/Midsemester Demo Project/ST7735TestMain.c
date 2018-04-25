@@ -470,7 +470,7 @@ int main(void)
 	fixedpt fp_bit_power = convert_double_to_fp((1 << bits) - 1);
 
 	fixedpt fp_target = convert_double_to_fp(target);
-	fixedpt fp_error = convert_double_to_fp(error);
+	fixedpt fp_error = convert_double_to_fp(printError);
 
 
 	// I don't think any of this part is necessary.
@@ -575,7 +575,7 @@ int main(void)
 	if (degree == 1) //ResultIsCorrect(fp_user_trim, fp_resolution, fp_linear_trim, fp_linear_resolution, fp_error)) ----- OLD
 	{
 		// print result
-		DrawSuccessfulResults("Linear", fp_user_trim);
+		DrawSuccessfulResults("Linear", fp_linear_trim);
 	}
 	else
 	{
@@ -583,7 +583,7 @@ int main(void)
 		// We then pass that value to the new ResultIsCorrect in order to test whether that is the case.
 
 		// First get the linear value into proper integer form
-		uint32_t linear_int_equiv = (uint32_t) convert convert_fp_to_uint64_t_rz(fp_linear_trim);
+		uint32_t linear_int_equiv = (uint32_t) convert_fp_to_uint64_t_rz(fp_linear_trim);
 
 		// Now use this value as an index into the sqrt array in order to determine the sqrt if that number
 		fixedpt fp_quadratic_trim = sqrt_11_bits[linear_int_equiv];
@@ -642,7 +642,7 @@ int main(void)
 
 
 			// First get the linear value into proper integer form
-			uint32_t linear_int_equiv = (uint32_t) convert convert_fp_to_uint64_t_rz(fp_linear_trim);
+			uint32_t linear_int_equiv = (uint32_t) convert_fp_to_uint64_t_rz(fp_linear_trim);
 
 			// Now use this value as an index into the sqrt array in order to determine the sqrt if that number
 			fixedpt fp_cubic_trim = cubic_11_bits[linear_int_equiv];
@@ -766,7 +766,7 @@ ResultIsCorrect(fixedpt test_value)
 	* In the case of a linear trim, this will always be correct.
 	fixedpt fp_target_voltage = test_value;
 
-	return (abs(fp_sub(fp_shifted_res, fp_target_voltage) <= printError));
+	return (abs(fp_sub(fp_shifted_res, fp_linear_trim) <= fp_error));
 	*/
 	// In quadratic case, we use a similar approach, but determine what the 11 bit linear equivalent will be of our result using Robert's tables
 	case 2:
@@ -792,10 +792,8 @@ ResultIsCorrect(fixedpt test_value)
 		fixedpt fp_target_voltage = test_value;
 
 	
-		return (abs(fp_sub(fp_shifted_res, fp_target_voltage)) <= printError); //printError needs to be in fixedpoint representation
+		return (abs(fp_sub(fp_shifted_res, fp_linear_trim)) <= fp_error);
 		*/
-
-	}
 	// Same as before, but with cubic table
 	case 3:
 		/* PSEUDO
@@ -820,9 +818,10 @@ ResultIsCorrect(fixedpt test_value)
 		fixedpt fp_target_voltage = test_value;
 
 	
-		return (abs(fp_sub(fp_shifted_res, fp_target_voltage)) <= printError); //printError needs to be in fixedpoint representation
-		*/
+		return (abs(fp_sub(fp_shifted_res, fp_target_voltage)) <= fp_error);
+	}
 }
+
 
 /*bool*/
 /*ResultIsCorrect(uint16_t result, fixedpt target, fixedpt error)*/
