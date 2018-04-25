@@ -186,14 +186,14 @@ typedef uint8_t bool;
   (byte & 0x08 ? '1' : '0'), \
   (byte & 0x04 ? '1' : '0'), \
   (byte & 0x02 ? '1' : '0'), \
-  (byte & 0x01 ? '1' : '0') 
+  (byte & 0x01 ? '1' : '0')
 
 //float error; //currently unused since only testing linear case
 void DisableInterrupts(void);
 void EnableInterrupts(void);
-bool ResultIsCorrect(fixedpt result, 
+bool ResultIsCorrect(fixedpt result,
                      fixedpt result_res,
-                     fixedpt target, 
+                     fixedpt target,
                      fixedpt target_res,
                      fixedpt error);
 
@@ -307,12 +307,12 @@ void DrawScreenBase() {
 }
 
 void DrawSuccessfulResults(char *degree, fixedpt fp_trim) {
-	uint16_t trim = (uint16_t) convert_fp_to_uint64_t_rz(fp_trim); 
+	uint16_t trim = (uint16_t) convert_fp_to_uint64_t_rz(fp_trim);
 
 	ST7735_FillScreen(0);
 	ST7735_SetCursor(0, 0);
 	printf("Successful Trim\n%s (Binary):\n", degree);
-  printf(""BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(trim));
+	printf(""BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(trim));
 }
 
 uint32_t BS_Find_Dac_Out(uint32_t low, uint32_t high, uint32_t target)
@@ -383,11 +383,11 @@ int main(void)
 	fixedpt resolution = 0; //change to use floating point library
 	double conversion = 0;
 
-	
+
 	//printf("Hello");
 	/* UI */
 	DrawScreenBase();
-	
+
 	uint8_t testCase = 0;
 	uint32_t outputVal = 0;
 	uint8_t start = 0;
@@ -472,180 +472,226 @@ int main(void)
 	fixedpt fp_target = convert_double_to_fp(target);
 	fixedpt fp_error = convert_double_to_fp(error);
 
+
+	// I don't think any of this part is necessary.
+
 	// Try linear
 	/*resolution = (fp_v_high - fp_v_low) / fp_bit_power;*/
 	/*result = (fp_target - fp_v_low) / resolution;*/
 
-    // Target result (using the resolution computed by the user's specifications)
-    
-    // Depending on the degree and bits specified, compute the appropriate target resolution
-    fixedpt fp_resolution;
-    fixedpt fp_user_trim;
+	// Target result (using the resolution computed by the user's specifications)
 
-    switch (degree)
-    {
-        case 1:
-            // Regular Linear
-            fp_resolution = fixedpt_div((fp_v_high - 0), fp_bit_power); 
-            fp_user_trim = fixedpt_div((fp_target - fp_v_low), fp_resolution);
-            break;
-        case 2:
-            // Quadratic
-            switch (bits)
-            {
-                case 6:
+	// Depending on the degree and bits specified, compute the appropriate target resolution
+
+	/*
+	fixedpt fp_resolution;
+	fixedpt fp_user_trim;
+
+	switch (degree)
+	{
+	    case 1:
+	        // Regular Linear
+	        fp_resolution = fixedpt_div((fp_v_high - 0), fp_bit_power);
+	        fp_user_trim = fixedpt_div((fp_target - fp_v_low), fp_resolution);
+	        break;
+	    case 2:
+	        // Quadratic
+	        switch (bits)
+	        {
+	            case 6:
 										fp_resolution = div_fp((sqrt_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-                case 7:
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	            case 7:
 										fp_resolution = div_fp((sqrt_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-                case 8:
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	            case 8:
 										fp_resolution = div_fp((sqrt_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-                case 9:
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	            case 9:
 										fp_resolution = div_fp((sqrt_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-                case 10:
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	            case 10:
 										fp_resolution = div_fp((sqrt_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-                case 11:
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	            case 11:
 										fp_resolution = div_fp((sqrt_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-            }
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	        }
 
-            break;
-        case 3:
-            // Cubic 
-            switch (bits)
-            {
-                case 6:
+	        break;
+	    case 3:
+	        // Cubic
+	        switch (bits)
+	        {
+	            case 6:
 										fp_resolution = div_fp((cubic_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-                case 7:
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	            case 7:
 										fp_resolution = div_fp((cubic_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-                case 8:
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	            case 8:
 										fp_resolution = div_fp((cubic_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-                case 9:
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	            case 9:
 										fp_resolution = div_fp((cubic_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-                case 10:
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	            case 10:
 										fp_resolution = div_fp((cubic_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-                case 11:
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	            case 11:
 										fp_resolution = div_fp((cubic_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
-                    break;
-            }
+	                fp_user_trim = div_fp((fp_target - fp_v_low), fp_resolution);
+	                break;
+	        }
 
-            break;
+	        break;
 
-        // TODO: Map number to quartic, linear_negative, linear constant, and negative_linear
-    }
+	    // TODO: Map number to quartic, linear_negative, linear constant, and negative_linear
+	}
+	*/
 
-    // Linear 
-    fixedpt fp_linear_resolution = div_fp((fp_v_high - 0), fp_bit_power); 
-    fixedpt fp_linear_trim = div_fp((fp_target - fp_v_low), fp_linear_resolution);
 
-	if (degree == 1)//ResultIsCorrect(fp_user_trim, fp_resolution, fp_linear_trim, fp_linear_resolution, fp_error))
+
+	// First, find what the linear value would be.
+	fixedpt fp_linear_resolution = div_fp((fp_v_high - 0), fp_bit_power);
+	fixedpt fp_linear_trim = div_fp((fp_target - fp_v_low), fp_linear_resolution);
+
+	// Once you have that, you assume it is linear, and use ResultIsCorrect to verify. All result is correct requires
+	// is the value we should pass in the event of a linear device.
+
+	//if (ResultIsCorrect(fp_linear_trim))
+	//{
+	if (degree == 1) //ResultIsCorrect(fp_user_trim, fp_resolution, fp_linear_trim, fp_linear_resolution, fp_error)) ----- OLD
 	{
 		// print result
-    DrawSuccessfulResults("Linear", fp_user_trim);
+		DrawSuccessfulResults("Linear", fp_user_trim);
 	}
 	else
 	{
-		//Try quadratic 
-        fixedpt fp_quadratic_resolution; 
-        fixedpt fp_quadratic_trim;
+		// None of this is really necessary. Assuming the device is quadratic, we simply take the square root of the linear solution.
+		// We then pass that value to the new ResultIsCorrect in order to test whether that is the case.
 
-        switch (bits)
-        {
-            case 6:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
-                break;
-            case 7:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
-                break;
-            case 8:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
-                break;
-            case 9:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
-                break;
-            case 10:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
-                break;
-            case 11:
-                fp_quadratic_resolution = div_fp((sqrt_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
-                break;
-        
-        }
-		if (degree == 2)//ResultIsCorrect(fp_quadratic_trim, fp_quadratic_resolution, fp_user_trim, fp_resolution, fp_error))
+		// First get the linear value into proper integer form
+		uint32_t linear_int_equiv = (uint32_t) convert convert_fp_to_uint64_t_rz(fp_linear_trim);
+
+		// Now use this value as an index into the sqrt array in order to determine the sqrt if that number
+		fixedpt fp_quadratic_trim = sqrt_11_bits[linear_int_equiv];
+
+		// Now test this value since we assume quadratic by calling ResultIsCorrect(fp_quadratic_trim)
+
+
+
+
+
+		// //Try quadratic
+		//       fixedpt fp_quadratic_resolution;
+		//       fixedpt fp_quadratic_trim;
+
+		//       switch (bits)
+		//       {
+		//           case 6:
+		//               fp_quadratic_resolution = div_fp((sqrt_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+		//               fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
+		//               break;
+		//           case 7:
+		//               fp_quadratic_resolution = div_fp((sqrt_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+		//               fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
+		//               break;
+		//           case 8:
+		//               fp_quadratic_resolution = div_fp((sqrt_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+		//               fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
+		//               break;
+		//           case 9:
+		//               fp_quadratic_resolution = div_fp((sqrt_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+		//               fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
+		//               break;
+		//           case 10:
+		//               fp_quadratic_resolution = div_fp((sqrt_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+		//               fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
+		//               break;
+		//           case 11:
+		//               fp_quadratic_resolution = div_fp((sqrt_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+		//               fp_quadratic_trim = div_fp((fp_target - fp_v_low), fp_quadratic_resolution);
+		//               break;
+
+//       }
+
+
+		//if (ResultIsCorrect(fp_quadratic_trim))
+		//{
+		if (degree == 2)//ResultIsCorrect(fp_quadratic_trim, fp_quadratic_resolution, fp_user_trim, fp_resolution, fp_error))  -------- OLD
 		{
 			//print result
 			DrawSuccessfulResults("Quadratic", sqrt_11_bits[convert_fp_to_uint64_t_rz(fp_linear_trim)]);
 		}
 		else
 		{
-            fixedpt fp_cubic_resolution;
-            fixedpt fp_cubic_trim;
 
-            switch (bits)
-            {
-                case 6:
-										fp_cubic_resolution = div_fp((cubic_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
-                    break;
-                case 7:
-										fp_cubic_resolution = div_fp((cubic_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
-                    break;
-                case 8:
-										fp_cubic_resolution = div_fp((cubic_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
-                    break;
-                case 9:
-										fp_cubic_resolution = div_fp((cubic_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
-                    break;
-                case 10:
-										fp_cubic_resolution = div_fp((cubic_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
-                    break;
-                case 11:
-										fp_cubic_resolution = div_fp((cubic_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
-                    fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
-                    break;
-            }
+			// Finally, we apply a similar approach for cubic.
 
+
+			// First get the linear value into proper integer form
+			uint32_t linear_int_equiv = (uint32_t) convert convert_fp_to_uint64_t_rz(fp_linear_trim);
+
+			// Now use this value as an index into the sqrt array in order to determine the sqrt if that number
+			fixedpt fp_cubic_trim = cubic_11_bits[linear_int_equiv];
+
+			// Now test this value with ResultIsCorrect
+
+			//   fixedpt fp_cubic_resolution;
+			//   fixedpt fp_cubic_trim;
+
+			//   switch (bits)
+			//   {
+			//       case 6:
+			// fp_cubic_resolution = div_fp((cubic_11_bits[63] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+			//           fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
+			//           break;
+			//       case 7:
+			// fp_cubic_resolution = div_fp((cubic_11_bits[127] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+			//           fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
+			//           break;
+			//       case 8:
+			// fp_cubic_resolution = div_fp((cubic_11_bits[255] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+			//           fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
+			//           break;
+			//       case 9:
+			// fp_cubic_resolution = div_fp((cubic_11_bits[511] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+			//           fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
+			//           break;
+			//       case 10:
+			// fp_cubic_resolution = div_fp((cubic_11_bits[1023] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+			//           fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
+			//           break;
+			//       case 11:
+			// fp_cubic_resolution = div_fp((cubic_11_bits[2047] - 0), fp_bit_power); //Indices should by 2^n - 1 and 0
+			//           fp_cubic_trim = div_fp((fp_target - fp_v_low), fp_cubic_resolution);
+			//           break;
+			// }
+
+			//if (ResultIsCorrect(fp_cubic_trim))
+			//{
 			// Try cubic
-			if (degree == 3)//ResultIsCorrect(fp_cubic_trim, fp_cubic_resolution, fp_user_trim, fp_resolution, fp_error))
+			if (degree == 3)//ResultIsCorrect(fp_cubic_trim, fp_cubic_resolution, fp_user_trim, fp_resolution, fp_error)) -------- OLD
 			{
 				//print result
-         DrawSuccessfulResults("Cubic", cubic_11_bits[convert_fp_to_uint64_t_rz(fp_linear_trim)]);
+				DrawSuccessfulResults("Cubic", cubic_11_bits[convert_fp_to_uint64_t_rz(fp_linear_trim)]);
 			}
 			else
 			{
 				ST7735_FillScreen(0);
-	            ST7735_SetCursor(0, 0);
+				ST7735_SetCursor(0, 0);
 				ST7735_OutString("No Solution Found!");
 			}
 		}
@@ -653,110 +699,200 @@ int main(void)
 }
 
 
-bool 
-ResultIsCorrect(fixedpt result, 
-                     fixedpt result_res,
-                     fixedpt target, 
-                     fixedpt target_res,
-                     fixedpt error)
+bool
+ResultIsCorrect(fixedpt result,
+                fixedpt result_res,
+                fixedpt target,
+                fixedpt target_res,
+                fixedpt error)
 {
-	
-		fixedpt result_voltage, target_voltage;
-	
-		switch(degree)
-		{
-			case 1:		
-				result_voltage = fixedpt_mul(result, result_res);
-			case 2:
-				result_voltage = fixedpt_mul(convert_uint64_t_to_fp((uint64_t) quadratic11[convert_fp_to_uint64_t_rz(result)]), result_res);
-			case 3:
-				result_voltage = fixedpt_mul(convert_uint64_t_to_fp((uint64_t) cubic11[convert_fp_to_uint64_t_rz(result)]), result_res);
-		}
-			
-		target_voltage = fixedpt_mul(target, target_res);
 
-			ST7735_FillScreen(0);
-			ST7735_SetCursor(0, 0);
-			ST7735_OutUDec((uint32_t) result);
-			ST7735_SetCursor(0, 2);
-			ST7735_OutUDec((uint32_t) result_res);
-			ST7735_SetCursor(0, 4);
-			ST7735_OutUDec((uint32_t) result_voltage);
-		
-		while(1);
-		return (abs(result_voltage - target_voltage) <= error);
+	fixedpt result_voltage, target_voltage;
+
+	switch (degree)
+	{
+	case 1:
+		result_voltage = fixedpt_mul(result, result_res);
+	case 2:
+		result_voltage = fixedpt_mul(convert_uint64_t_to_fp((uint64_t) quadratic11[convert_fp_to_uint64_t_rz(result)]), result_res);
+	case 3:
+		result_voltage = fixedpt_mul(convert_uint64_t_to_fp((uint64_t) cubic11[convert_fp_to_uint64_t_rz(result)]), result_res);
+	}
+
+	target_voltage = fixedpt_mul(target, target_res);
+
+	ST7735_FillScreen(0);
+	ST7735_SetCursor(0, 0);
+	ST7735_OutUDec((uint32_t) result);
+	ST7735_SetCursor(0, 2);
+	ST7735_OutUDec((uint32_t) result_res);
+	ST7735_SetCursor(0, 4);
+	ST7735_OutUDec((uint32_t) result_voltage);
+
+	while (1);
+	return (abs(result_voltage - target_voltage) <= error);
 }
 
+
+// Modified version of ResultIsCorrect that properly uses Robert's arrays as well as DAC and ADC
+bool
+ResultIsCorrect(fixedpt test_value)
+{
+	// In order to simulate different devices, we will use user parameters (since we only have an 11 bit linear DAC)
+
+	// First, get the value into integer form no matter which degree.
+	uint16_t integer_form = (uint16_t) convert_fp_to_uint64_t_rz(value);
+
+	switch (degree)
+	{
+	// If linear, we simply pass the calculated value shifted left 1 - numBits times (this is necessary to convert it to the 11 bit equivalent)
+	case 1:
+	//Use a modified version (yet to be written) of Robert's ADCIn Function above with the left-shift version of this number.
+
+	/* PSEUDO
+
+	* Using the found linear value, pass it out and see if the input matches what we expect in a linear case. If it doesn't,
+	* the input isn't linear.
+
+	uint16_t adc_res = testADCIn(integer_form << (1 - numbits));
+
+	* Shift it back to get it original form
+	uint16_t shifted_res = adc_res >> (1 - numbits);
+
+	* Convert to FP and check against target value
+	fixedpt fp_shifted_res = convert_uint64_t_to_fp((uint64_t) shifted_res);
+
+	* Do this by calculating what the target value would be in a linear case and testing our result against that.
+	* In the case of a linear trim, this will always be correct.
+	fixedpt fp_target_voltage = test_value;
+
+	return (abs(fp_sub(fp_shifted_res, fp_target_voltage) <= printError));
+	*/
+	// In quadratic case, we use a similar approach, but determine what the 11 bit linear equivalent will be of our result using Robert's tables
+	case 2:
+		/* PSEUDO
+
+		// In this case, the input is the sqrt of the what the linear value would be. We will use Robert's table to find its quadratic equivalent.
+		uint16_t quad_equiv = quadratic11[integer_form];
+
+		uint16_t adc_res = testADCIn(quad_equiv << (1 - numbits));
+
+		* Shift it back to get it original form
+		uint16_t shifted_res = adc_res >> (1 - numbits);
+		
+		* We have to get it back into its sqrt form, so use Julian's tables
+		fixedpt sqrt_conversion = sqrt_11_bits[shifted_res];
+
+		* Convert to FP and check against target value
+		fixedpt fp_shifted_res = convert_uint64_t_to_fp((uint64_t) sqrt_conversion);
+
+		* Do this by calculating what the target value would be in a linear case and testing our result against that.
+		* In the case of a linear trim, this will always be correct.
+
+		fixedpt fp_target_voltage = test_value;
+
+	
+		return (abs(fp_sub(fp_shifted_res, fp_target_voltage)) <= printError); //printError needs to be in fixedpoint representation
+		*/
+
+	}
+	// Same as before, but with cubic table
+	case 3:
+		/* PSEUDO
+
+		// In this case, the input is the sqrt of the what the linear value would be. We will use Robert's table to find its quadratic equivalent.
+		uint16_t cubic_equiv = cubic11[integer_form];
+
+		uint16_t adc_res = testADCIn(quad_equiv << (1 - numbits));
+
+		* Shift it back to get it original form
+		uint16_t shifted_res = adc_res >> (1 - numbits);
+		
+		* We have to get it back into its sqrt form, so use Julian's tables
+		fixedpt cubic_conversion = cubic_11_bits[shifted_res];
+
+		* Convert to FP and check against target value
+		fixedpt fp_shifted_res = convert_uint64_t_to_fp((uint64_t) cubic_conversion);
+
+		* Do this by calculating what the target value would be in a linear case and testing our result against that.
+		* In the case of a linear trim, this will always be correct.
+
+		fixedpt fp_target_voltage = test_value;
+
+	
+		return (abs(fp_sub(fp_shifted_res, fp_target_voltage)) <= printError); //printError needs to be in fixedpoint representation
+		*/
+}
 
 /*bool*/
 /*ResultIsCorrect(uint16_t result, fixedpt target, fixedpt error)*/
 /*{*/
-	/*fixedpt newresult;	*/
+/*fixedpt newresult;	*/
 
-    /*switch (degree)*/
-    /*{*/
-        /*case 1:*/
-            /*// Regular Linear*/
-            /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) result), resolution);*/
-            /*break;*/
-        /*case 2:*/
-            /*// Quadratic*/
-            /*switch (bits)*/
-            /*{*/
-                /*case 6:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic6[result]), resolution);*/
-                    /*break;*/
-                /*case 7:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic7[result]), resolution);*/
-                    /*break;*/
-                /*case 8:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic8[result]), resolution);*/
-                    /*break;*/
-                /*case 9:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic9[result]), resolution);*/
-                    /*break;*/
-                /*case 10:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic10[result]), resolution);*/
-                    /*break;*/
-                /*case 11:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic11[result]), resolution);*/
-                    /*break;*/
-            /*}*/
+/*switch (degree)*/
+/*{*/
+/*case 1:*/
+/*// Regular Linear*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) result), resolution);*/
+/*break;*/
+/*case 2:*/
+/*// Quadratic*/
+/*switch (bits)*/
+/*{*/
+/*case 6:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic6[result]), resolution);*/
+/*break;*/
+/*case 7:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic7[result]), resolution);*/
+/*break;*/
+/*case 8:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic8[result]), resolution);*/
+/*break;*/
+/*case 9:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic9[result]), resolution);*/
+/*break;*/
+/*case 10:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic10[result]), resolution);*/
+/*break;*/
+/*case 11:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) quadratic11[result]), resolution);*/
+/*break;*/
+/*}*/
 
-            /*break;*/
-        /*case 3:*/
-            /*// Cubic */
-            /*switch (bits)*/
-            /*{*/
-                /*case 6:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic6[result]), resolution);*/
-                    /*break;*/
-                /*case 7:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic7[result]), resolution);*/
-                    /*break;*/
-                /*case 8:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic8[result]), resolution);*/
-                    /*break;*/
-                /*case 9:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic9[result]), resolution);*/
-                    /*break;*/
-                /*case 10:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic10[result]), resolution);*/
-                    /*break;*/
-                /*case 11:*/
-                    /*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic11[result]), resolution);*/
-                    /*break;*/
-            /*}*/
+/*break;*/
+/*case 3:*/
+/*// Cubic */
+/*switch (bits)*/
+/*{*/
+/*case 6:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic6[result]), resolution);*/
+/*break;*/
+/*case 7:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic7[result]), resolution);*/
+/*break;*/
+/*case 8:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic8[result]), resolution);*/
+/*break;*/
+/*case 9:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic9[result]), resolution);*/
+/*break;*/
+/*case 10:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic10[result]), resolution);*/
+/*break;*/
+/*case 11:*/
+/*newresult = div_fp(convert_uint64_t_to_fp((uint64_t) cubic11[result]), resolution);*/
+/*break;*/
+/*}*/
 
-            /*break;*/
+/*break;*/
 
-        /*// TODO: Map number to quartic, linear_negative, linear constant, and negative_linear*/
+/*// TODO: Map number to quartic, linear_negative, linear constant, and negative_linear*/
 
-        /*default:*/
-            /*break;*/
-    /*}*/
+/*default:*/
+/*break;*/
+/*}*/
 
-	/*return abs(target - newresult) < error;*/
+/*return abs(target - newresult) < error;*/
 /*}*/
 
 //}
