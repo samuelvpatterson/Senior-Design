@@ -307,7 +307,7 @@ void DrawScreenBase() {
 }
 
 void DrawSuccessfulResults(char *degree, fixedpt fp_trim) {
-    uint16_t trim = (uint16_t) convert_uint64_t_to_fp(fp_trim); 
+	uint16_t trim = (uint16_t) convert_fp_to_uint64_t_rz(fp_trim); 
 
 	ST7735_FillScreen(0);
 	ST7735_SetCursor(0, 0);
@@ -559,10 +559,10 @@ int main(void)
     fixedpt fp_linear_resolution = div_fp((fp_v_high - 0), fp_bit_power); 
     fixedpt fp_linear_trim = div_fp((fp_target - fp_v_low), fp_linear_resolution);
 
-	if (ResultIsCorrect(fp_linear_trim, fp_linear_resolution, fp_user_trim, fp_resolution, fp_error))
+	if (degree == 1)//ResultIsCorrect(fp_user_trim, fp_resolution, fp_linear_trim, fp_linear_resolution, fp_error))
 	{
 		// print result
-    DrawSuccessfulResults("Linear", (uint32_t) convert_fp_to_uint64_t_rz(fp_user_trim));
+    DrawSuccessfulResults("Linear", fp_user_trim);
 	}
 	else
 	{
@@ -598,10 +598,10 @@ int main(void)
                 break;
         
         }
-		if (ResultIsCorrect(fp_quadratic_trim, fp_quadratic_resolution, fp_user_trim, fp_resolution, fp_error))
+		if (degree == 2)//ResultIsCorrect(fp_quadratic_trim, fp_quadratic_resolution, fp_user_trim, fp_resolution, fp_error))
 		{
 			//print result
-			DrawSuccessfulResults("Quadratic", (uint32_t) convert_fp_to_uint64_t_rz(fp_quadratic_trim));
+			DrawSuccessfulResults("Quadratic", sqrt_11_bits[convert_fp_to_uint64_t_rz(fp_linear_trim)]);
 		}
 		else
 		{
@@ -637,10 +637,10 @@ int main(void)
             }
 
 			// Try cubic
-			if (ResultIsCorrect(fp_cubic_trim, fp_cubic_resolution, fp_user_trim, fp_resolution, fp_error))
+			if (degree == 3)//ResultIsCorrect(fp_cubic_trim, fp_cubic_resolution, fp_user_trim, fp_resolution, fp_error))
 			{
 				//print result
-         DrawSuccessfulResults("Cubic", (uint32_t) convert_fp_to_uint64_t_rz(fp_cubic_trim));
+         DrawSuccessfulResults("Cubic", cubic_11_bits[convert_fp_to_uint64_t_rz(fp_linear_trim)]);
 			}
 			else
 			{
@@ -677,10 +677,13 @@ ResultIsCorrect(fixedpt result,
 
 			ST7735_FillScreen(0);
 			ST7735_SetCursor(0, 0);
-			ST7735_OutUDec((uint32_t) result_voltage);
+			ST7735_OutUDec((uint32_t) result);
 			ST7735_SetCursor(0, 2);
-			ST7735_OutUDec((uint32_t) target_voltage);
-	
+			ST7735_OutUDec((uint32_t) result_res);
+			ST7735_SetCursor(0, 4);
+			ST7735_OutUDec((uint32_t) result_voltage);
+		
+		while(1);
 		return (abs(result_voltage - target_voltage) <= error);
 }
 
